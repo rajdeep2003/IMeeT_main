@@ -70,8 +70,8 @@ const Navbar = () => {
 
   const handleAuth = () => {
   if (isAuthenticated) {
-    // 1️⃣ Logout from Auth0
-   Logout()
+    // 1️⃣ logout from Auth0
+   logout()
   } else {
     login();
   }
