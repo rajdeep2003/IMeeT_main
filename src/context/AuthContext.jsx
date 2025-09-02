@@ -48,19 +48,17 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
-  // Only handle **local state clearing**, navigation should happen in the component
   const logout = () => {
-  setUser(null); // clear local user state
+    setUser(null); // clear local state
 
-  // Remove Auth0 tokens manually from localStorage
-  localStorage.removeItem(`@@auth0spajs@@::${process.env.REACT_APP_AUTH0_DOMAIN}::default::openid profile email`);
-  
-  // Also remove the cached user
-  localStorage.removeItem("auth0.is.authenticated");
+    // Remove Auth0 cached tokens (since cacheLocation=localstorage)
+    localStorage.removeItem("auth0.is.authenticated");
+    localStorage.removeItem(
+      "@@auth0spajs@@::dev-jgsawtvpf2vqmlx7.us.auth0.com::default::openid profile email"
+    );
 
-  // Then call logout without localOnly
-  auth0Logout({ logoutParams: { returnTo: window.location.origin } });
-};
+    auth0Logout({ logoutParams: { returnTo: window.location.origin } });
+  };
 
   return (
     <AuthContext.Provider

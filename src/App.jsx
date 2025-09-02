@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     const unlock = async () => await Tone.start();
     window.addEventListener("click", unlock, { once: true });
-
     return () => window.removeEventListener("click", unlock);
   }, []);
 
