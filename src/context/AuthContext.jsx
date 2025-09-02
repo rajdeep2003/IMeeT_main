@@ -48,21 +48,34 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
 
- const logout = () => {
+const logout = () => {
+  // 1️⃣ Clear React state
   setUser(null);
 
-  // Remove Auth0 cached tokens
+  // 2️⃣ Clear all localStorage & sessionStorage
+  localStorage.clear();
+  sessionStorage.clear();
+
+  // 3️⃣ Remove Auth0 cached tokens (just in case)
   localStorage.removeItem("auth0.is.authenticated");
   localStorage.removeItem(
     "@@auth0spajs@@::dev-jgsawtvpf2vqmlx7.us.auth0.com::default::openid profile email"
   );
 
-  // Log out from Auth0 and redirect
+  // 4️⃣ Log out from Auth0
   auth0Logout({ logoutParams: { returnTo: window.location.origin } });
 
-  // Clear browser history and reload
+  // 5️⃣ Clear browser history and reload to root
   window.location.replace(window.location.origin);
+
+  // 6️⃣ Optional: prevent bfcache restoration
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+      window.location.reload();
+    }
+  });
 };
+
 
 
   return (
