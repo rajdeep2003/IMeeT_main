@@ -72,7 +72,7 @@ export const AuthProvider = ({ children }) => {
         logout: () => {
   setUser(null);
   logout({ logoutParams: { localOnly: true } });
-  setTimeout(() => navigate("/", { replace: true }), 0);
+  setTimeout(() => navigate("/", { replace: true }), 0); // ensure Router context ready
 }
       }}
     >
