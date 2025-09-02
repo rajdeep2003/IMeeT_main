@@ -1,19 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+
 const AuthContext = createContext();
-import { useNavigate } from "react-router-dom";
 
 export const AuthProvider = ({ children }) => {
   const {
     isAuthenticated,
     user: auth0User,
     loginWithRedirect,
-    logout,
+    logout: auth0Logout,
     isLoading,
     getAccessTokenSilently,
   } = useAuth0();
-  const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
 
@@ -22,12 +21,7 @@ export const AuthProvider = ({ children }) => {
       if (isAuthenticated && auth0User) {
         try {
           const token = await getAccessTokenSilently();
-
-          const updatedUser = {
-            ...auth0User,
-            token,
-          };
-
+          const updatedUser = { ...auth0User, token };
           setUser(updatedUser);
 
           await axios.post(
@@ -50,11 +44,14 @@ export const AuthProvider = ({ children }) => {
   }, [isAuthenticated, auth0User, getAccessTokenSilently]);
 
   const updateUser = (updatedData) => {
-    setUser((prev) => ({
-      ...prev,
-      ...updatedData,
-    }));
+    setUser((prev) => ({ ...prev, ...updatedData }));
     return true;
+  };
+
+  // Only handle **local state clearing**, navigation should happen in the component
+  const logout = () => {
+    setUser(null);
+    auth0Logout({ logoutParams: { localOnly: true } }); // clears local Auth0 session
   };
 
   return (
@@ -65,15 +62,10 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         login: () =>
           loginWithRedirect({
-            authorizationParams: {
-              redirect_uri: window.location.origin,
-            },
+            authorizationParams: { redirect_uri: window.location.origin },
           }),
-        logout: () => {
-  setUser(null);
-  logout({ logoutParams: { localOnly: true } });
-  setTimeout(() => navigate("/", { replace: true }), 0); // ensure Router context ready
-}
+        logout,
+        updateUser,
       }}
     >
       {children}
@@ -83,8 +75,6 @@ export const AuthProvider = ({ children }) => {
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
 };
