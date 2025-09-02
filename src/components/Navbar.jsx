@@ -18,6 +18,13 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+    useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = () => {
+      window.location.replace(window.location.origin); // forces reload
+    };
+  }, []);
+
   useEffect(() => {
     if (!isAuthenticated || !user?.email || !user?.token) return;
 
