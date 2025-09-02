@@ -10,7 +10,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [userData, setUserData] = useState(null);
   const location = useLocation();
-  const { isAuthenticated, login, Logout, user, isLoading } = useAuth();
+  const { isAuthenticated, login, logout, user, isLoading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
