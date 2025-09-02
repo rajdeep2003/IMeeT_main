@@ -70,10 +70,10 @@ export const AuthProvider = ({ children }) => {
             },
           }),
         logout: () => {
-          setUser(null);
-          logout({ logoutParams: { localOnly: true } }); // only clears local session
-          navigate("/", { replace: true }); // replace history so Back doesn’t show old page
-        },
+  setUser(null);
+  logout({ logoutParams: { localOnly: true } });
+  setTimeout(() => navigate("/", { replace: true }), 0);
+}
       }}
     >
       {children}
