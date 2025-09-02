@@ -20,6 +20,14 @@ function App() {
     return () => window.removeEventListener("click", unlock);
   }, []);
 
+   // Prevent back-button cached pages
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = () => {
+      window.location.replace(window.location.origin); // forces reload
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <Navbar />
