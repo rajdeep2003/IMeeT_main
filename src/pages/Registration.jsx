@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import confetti from "canvas-confetti";//explotion
 import * as Tone from "tone";//sound
 import playClickSound from "../utils/ClickSound.js";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -209,6 +210,8 @@ const Registration = () => {
           }));
         } else {
           console.error("Error creating team:", teamResponse.data.message);
+          toast.error(teamResponse.data.message || "Error creating team");
+          setIsLoading(false);
           return;
         }
       }
@@ -233,6 +236,7 @@ const Registration = () => {
       } else {
         console.log(response.data.message)
         console.error("Registration failed:", response.data.message);
+        toast.error(response.data.message || "Registration failed");
         setIsLoading(false);
       }
     } catch (error) {
@@ -246,11 +250,12 @@ const Registration = () => {
       }
       if (error.response && error.response.data && error.response.data.message) {
         console.error("Registration error:", error.response.data.message);
-        alert(error.response.data.message); 
+        toast.error(error.response.data.message); 
       } else {
         console.error("Unexpected error:", error);
-        alert("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.");
       }
+      setIsLoading(false);
     }
   };
   // Fetch event details (team size & type)
@@ -308,6 +313,7 @@ const Registration = () => {
 
       if (isRegistered) {
         setIsRegistered(true);
+        toast.success("You are already registered for this event!");
       } else {
         console.log('User is not registered for this event');
       }
@@ -463,6 +469,7 @@ const validateForm = () => {
     >
       {/* Dark overlay */}
   <div className="absolute inset-0 bg-black/60 opacity-60 z-0"></div>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-3xl p-6 w-full max-w-lg text-white mx-4 sm:mx-0 relative overflow-hidden mt-4 z-0">
         <h1 className="text-5xl bg-gradient-to-r from-[#FFFFFF] to-[#FF7474] bg-clip-text text-transparent font-semibold text-center mb-6 pb-2">
           <span>Register Here !!!!</span>
