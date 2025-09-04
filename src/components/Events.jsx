@@ -40,15 +40,15 @@ const Events = () => {
       infinite: true,
       speed: 600,
       centerMode: true,
-      centerPadding: "50px",
-      slidesToShow: 4,
+      centerPadding: "0px",
+      slidesToShow: 3,
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 3500,
       responsive: [
-        { breakpoint: 1280, settings: { slidesToShow: 3, centerPadding: "30px" } },
+        { breakpoint: 1280, settings: { slidesToShow: 2, centerPadding: "30px" } },
         { breakpoint: 1024, settings: { slidesToShow: 2, centerPadding: "20px" } },
-        { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: "10px" } },
+        { breakpoint: 640, settings: { slidesToShow: 1, centerPadding: "15px" } },
       ],
     };
 
@@ -58,10 +58,14 @@ const Events = () => {
           {title}
         </h2>
 
+        {/* Parent container */}
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
           <Slider {...settings}>
             {events.map((event) => (
-              <div key={event.event_id} className="p-4">
+              <div
+                key={event.event_id}
+                className="!flex !justify-center px-3" // ✅ spacing between slides
+              >
                 <Link to={`/events/${event.event_id}`}>
                   <Motion.div
                     variants={fadeIn("up", 0.2)}
@@ -70,7 +74,9 @@ const Events = () => {
                     whileHover={{ scale: 1.07, rotate: 1 }}
                     transition={{ type: "spring", stiffness: 200, damping: 20 }}
                     viewport={{ once: false, amount: 0.6 }}
-                    className="relative group rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md bg-white/5 border border-white/20 hover:border-fuchsia-400/70 transition-all duration-500 aspect-[4/5] flex flex-col"
+                    className="relative group rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md 
+                               bg-white/5 border border-white/20 hover:border-fuchsia-400/70 
+                               transition-all duration-500 w-80 h-96 flex flex-col"
                   >
                     {/* Event Image */}
                     <img
@@ -111,9 +117,7 @@ const Events = () => {
 
       {/* Floating Glowing Blobs */}
       <div className="absolute top-10 left-[-15rem] w-[28rem] h-[28rem] bg-fuchsia-600/40 rounded-full blur-3xl animate-leftBlob"></div>
-
       <div className="absolute top-1/3 right-[-10rem] w-[34rem] h-[34rem] bg-amber-400/30 rounded-full blur-3xl animate-rightBlob"></div>
-
       <div className="absolute bottom-10 left-[-18rem] w-[28rem] h-[28rem] bg-pink-400/35 rounded-full blur-3xl animate-bottomBlob"></div>
 
       {/* Foreground content */}
