@@ -34,9 +34,7 @@ router.get('/:year', async (req, res) => {
   // Hardcoded image lists
   const images = {
     "2022": [
-      "https://your-cdn-or-supabase-link.com/2022/image1.jpg",
-      "https://your-cdn-or-supabase-link.com/2022/image2.jpg",
-      "https://your-cdn-or-supabase-link.com/2022/image3.png"
+      
     ],
     "2024": [
       "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",

@@ -12,9 +12,12 @@ export default function AGallery() {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    console.log("useEffect triggered, year:", year);
     const fetchImages = async () => {
       try {
+        console.log("Fetching images for year:", year);
         const res = await axios.get(`https://imeetserver2k25.onrender.com/gallery/${year}`);
+        console.log("Fetched images:", res.data.images);
         setImages(res.data.images || []);
       } catch (err) {
         console.error("Failed to fetch images:", err);
@@ -25,11 +28,13 @@ export default function AGallery() {
   }, [year]);
 
   const handleCardClick = (index) => {
+    console.log("Card clicked, index:", index, "expandedCard:", expandedCard);
     setExpandedCard(index === expandedCard ? null : index);
   };
 
   const flipCard = (index, e) => {
     e.stopPropagation();
+    console.log("Flip button clicked, index:", index, "isFlipped:", isFlipped[index]);
     setIsFlipped((prev) => ({
       ...prev,
       [index]: !prev[index],
@@ -133,6 +138,11 @@ export default function AGallery() {
                 }`}
                 onClick={() => handleCardClick(i)}
               >
+                {expandedCard === i && (
+                  <>
+                    {console.log("Expanded card index:", i)}
+                  </>
+                )}
                 <div className="w-full h-full perspective-1000 cursor-pointer">
                   <div
                     className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform-style-3d ${
@@ -211,7 +221,10 @@ export default function AGallery() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setExpandedCard(null)}
+              onClick={() => {
+                console.log("Overlay clicked, closing expanded card");
+                setExpandedCard(null);
+              }}
             />
           )}
         </motion.div>
