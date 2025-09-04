@@ -56,10 +56,13 @@ const logout = () => {
   localStorage.clear();
   sessionStorage.clear();
 
-  // 3️⃣ Remove Auth0 cached tokens (just in case)
+  // 3️⃣ Remove Auth0 cached tokens dynamically (domain + clientId from env)
+  const domain = import.meta.env.VITE_AUTH0_DOMAIN;
+  const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
+
   localStorage.removeItem("auth0.is.authenticated");
   localStorage.removeItem(
-    "@@auth0spajs@@::dev-jgsawtvpf2vqmlx7.us.auth0.com::default::openid profile email"
+    `@@auth0spajs@@::${domain}::${clientId}::openid profile email`
   );
 
   // 4️⃣ Log out from Auth0
@@ -75,6 +78,7 @@ const logout = () => {
     }
   });
 };
+
 
 
 
