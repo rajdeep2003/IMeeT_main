@@ -29,27 +29,31 @@
   // });
 
   router.get('/:year', async (req, res) => {
-    const { year } = req.params;
+  const { year } = req.params;
+  console.log(`[Gallery API] Request received for year: ${year}`);
 
-    // Hardcoded image lists
-    const images = {
-      "2022": [
-        "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",
-        "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",
-      ],
-      "2024": [
-        "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",
-        "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",
-        "https://ik.imagekit.io/r6iowgnur/2024/IMG_2622.JPG?updatedAt=1756968733884",
-      ]
-    };
+  // Hardcoded image lists
+  const images = {
+    "2022": [
+      "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",
+      "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",
+    ],
+    "2024": [
+      "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",
+      "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",
+      "https://ik.imagekit.io/r6iowgnur/2024/IMG_2622.JPG?updatedAt=1756968733884",
+    ]
+  };
 
-    if (images[year]) {
-      res.status(200).json({ images: images[year] });
-    } else {
-      res.status(404).json({ error: "No images found for this year." });
-    }
-  });
+  if (images[year]) {
+    console.log(`[Gallery API] Found ${images[year].length} images for year ${year}`);
+    res.status(200).json({ images: images[year] });
+  } else {
+    console.warn(`[Gallery API] No images found for year: ${year}`);
+    res.status(404).json({ error: "No images found for this year." });
+  }
+});
+
 
     
   export default router;
