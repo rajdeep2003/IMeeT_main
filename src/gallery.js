@@ -9,27 +9,7 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
-// router.get('/:year', async (req, res) => {
-//     const { year } = req.params;
-//     try {
-//       const { data, error } = await supabase.storage.from('gallery').list(year, {
-//         limit: 100,
-//       });
 
-//       if (error) throw error;
-
-//       const publicUrls = data
-//         .filter(file => file.name.match(/\.(jpg|jpeg|png|webp)$/i))
-//         .map(file => {
-//           return supabase.storage.from('gallery').getPublicUrl(`${year}/${file.name}`).data.publicUrl;
-//         });
-
-//       res.status(200).json({ images: publicUrls });
-//     } catch (err) {
-//       console.error("Error fetching images:", err);
-//       res.status(500).json({ error: "Failed to fetch images." });
-//     }
-// });
 
 router.get("/:year", async (req, res) => {
   const { year } = req.params;
@@ -42,9 +22,12 @@ router.get("/:year", async (req, res) => {
     "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",
   ],
   "2024": [
-    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",
-    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",
-    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2622.JPG?updatedAt=1756968733884",
+    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2701.JPG?updatedAt=1756968735717",//1
+    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2690.JPG?updatedAt=1756968734744",//2
+    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2622.JPG?updatedAt=1756968733884", 
+    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2607.JPG.~tmp?updatedAt=1756968733957",
+    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2670.JPG?updatedAt=1756968732996",
+    "https://ik.imagekit.io/r6iowgnur/2024/IMG_2617.JPG?updatedAt=1756968732507",
   ],
 };
 
