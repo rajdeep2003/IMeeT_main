@@ -118,7 +118,7 @@ const EventDetails = () => {
               {event.details}
             </p>
 
-            <p className="mb-3">
+            {/* <p className="mb-3">
               <span className="font-semibold text-xl text-amber-200">
                 Coordinators:{" "}
               </span>
@@ -134,7 +134,22 @@ const EventDetails = () => {
               {event.contact_no.length > 0
                 ? event.contact_no.join(", ")
                 : "N/A"}
-            </p>
+            </p> */}
+
+
+            <p className="mb-3">
+  <span className="font-semibold text-xl text-amber-200">
+    Coordinators:{" "}
+  </span>
+  {event.coordinators ? event.coordinators : "N/A"}
+</p>
+
+<p className="mb-6">
+  <span className="font-semibold text-xl text-amber-200">
+    Contacts:{" "}
+  </span>
+  {event.contacts ? event.contacts : "N/A"}
+</p>
 
             <div className="bg-gradient-to-tr from-black to-purple-900 p-4 rounded-lg text-sm text-white">
               <p className="font-semibold">Rules:</p>
