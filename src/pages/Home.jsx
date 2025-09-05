@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import About from "../components/About.jsx"
 import Events from "../components/Events.jsx"
 import HeroSection from '../components/HeroSection.jsx'
-import Stripe from "../assets/Stripe-img.png"
+import Stripe from "../assets/Group 93 (2).svg"
 import { motion } from "framer-motion"
 
 const Home = () => {
