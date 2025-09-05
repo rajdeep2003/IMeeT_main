@@ -232,7 +232,7 @@
                                   animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: 0.2 }}
                                 >
-                                  <a href={member.insta} target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-300 text-xl" onClick={e => e.stopPropagation()}>
+                                  {/* <a href={member.insta} target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-300 text-xl" onClick={e => e.stopPropagation()}>
                                     <FaInstagram />
                                   </a>
                                   <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 text-xl" onClick={e => e.stopPropagation()}>
@@ -240,7 +240,7 @@
                                   </a>
                                   <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white text-xl" onClick={e => e.stopPropagation()}>
                                     <FaGithub />
-                                  </a>
+                                  </a> */}
                                 </motion.div>
                               )}
                             </div>
