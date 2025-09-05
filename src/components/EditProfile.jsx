@@ -124,7 +124,7 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-purple-200 text-sm mb-1">Upload Profile Picture</label>
             <input 
               type="file" 
@@ -133,7 +133,7 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
               className="w-full p-2 rounded-lg bg-gray-300 text-gray-900 border border-purple-400"
             />
             <p className="text-xs text-gray-300 pt-1">Max File Size: 1 MB</p>
-          </div>
+          </div> */}
           {preview && (
             <div className="flex justify-center">
               <img src={preview} alt="Profile Preview" className="rounded-full w-24 h-24 object-cover border border-purple-400" />
