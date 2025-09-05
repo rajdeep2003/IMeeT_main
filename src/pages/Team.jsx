@@ -25,7 +25,7 @@
       const fetchTeamData = async () => {
         let data;
         try {
-          const response = await axios.get("https://imeetserver2k25.onrender.com/team-details");
+          const response = await axios.get("/api/team-details");
           data = response.data.data;
         } catch (error) {
           console.error("Error fetching team data:", error);
@@ -197,7 +197,7 @@
                         {/* Member Image */}
                         <div className="relative w-full h-full">
                           <img
-                            src={member.img_url || "https://imeetserver2k25.onrender.com/placeholder/400/320"}
+                            src={member.img_url || "/api/placeholder/400/320"}
                             alt={member.name}
                             className="w-full h-full object-cover"
                           />

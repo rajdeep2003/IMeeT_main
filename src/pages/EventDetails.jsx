@@ -30,7 +30,7 @@ const EventDetails = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await axios.get(
-          "https://imeetserver2k25.onrender.com/eventDetails",
+          "/api/eventDetails",
           {
             params: { event_id: event_id },
           }

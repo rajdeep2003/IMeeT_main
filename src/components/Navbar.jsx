@@ -34,7 +34,7 @@ const Navbar = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("https://imeetserver2k25.onrender.com/participant-details", {
+        const response = await axios.get("/api/participant-details", {
           params: { email: user.email },
           headers: {
             "Content-Type": "application/json",

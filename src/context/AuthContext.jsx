@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
           setUser(updatedUser);
 
           await axios.post(
-            "https://imeetserver2k25.onrender.com/add-user",
+            "/api/add-user",
             { user: updatedUser },
             {
               headers: {
