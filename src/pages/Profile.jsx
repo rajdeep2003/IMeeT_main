@@ -158,9 +158,9 @@ const Profile = () => {
         </div>
 
         <nav className="mt-8 flex flex-col gap-3">
-          <button onClick={() => {scrollToRef(infoRef); playClickSound();}} className="px-4 py-2 rounded-lg bg-purple-700/30 hover:bg-purple-700/50 transition">
+          {/* <button onClick={() => {scrollToRef(infoRef); playClickSound();}} className="px-4 py-2 rounded-lg bg-purple-700/30 hover:bg-purple-700/50 transition">
             Personal Info
-          </button>
+          </button> */}
           <button onClick={() => {scrollToRef(eventsRef); playClickSound();}} className="px-4 py-2 rounded-lg bg-purple-700/30 hover:bg-purple-700/50 transition">
             Events
           </button>
