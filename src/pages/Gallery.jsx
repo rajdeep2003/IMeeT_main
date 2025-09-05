@@ -16,7 +16,7 @@ export default function AGallery() {
     const fetchImages = async () => {
       try {
         console.log("Fetching images for year:", year);
-        const res = await axios.get(`https://imeetserver2k25.onrender.com/gallery/${year}`);
+        const res = await axios.get(`/api/gallery/${year}`);
         console.log("Fetched images:", res.data.images);
         setImages(res.data.images || []);
       } catch (err) {
