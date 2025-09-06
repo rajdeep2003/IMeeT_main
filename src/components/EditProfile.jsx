@@ -3,6 +3,7 @@ import { FiX } from 'react-icons/fi';
 import axios from "axios";
 import playClickSound from "../utils/ClickSound.js";
 import { playDropdownCloseSound } from '../utils/ClickSound.js';
+
 const EditProfile = ({ user, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
@@ -14,25 +15,32 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
   const [fileError, setFileError] = useState(""); 
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null); 
+
   const handleChange = (e) => {
+    console.log(`[EditProfile] Field changed: ${e.target.name} = ${e.target.value}`);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    console.log("[EditProfile] Image file selected:", file);
     if (file) {
       if (file.size > 1 * 1024 * 1024) {
         setFileError("File size must be less than 1MB.");
         setSelectedFile(null);
+        console.warn("[EditProfile] File too large:", file.size);
       } else {
         setImage(file)
         setFileError("");
         setSelectedFile(file);
+        console.log("[EditProfile] Image file accepted:", file.name);
       }
     }
   };
 
   const handleSubmit = async(e) => {
     e.preventDefault();
+    console.log("[EditProfile] Submitting form with data:", formData, "Image:", image);
     try {
       const formDataToSend = new FormData();
       formDataToSend.append("email", user.email);
@@ -42,20 +50,25 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
       formDataToSend.append("phone", formData.phone);
       if (image) {
         formDataToSend.append("image", image);
+        console.log("[EditProfile] Appended image to formData:", image.name);
       }
       const response = await axios.post("/api/update-user", formDataToSend, {
         headers: { "Content-Type": "multipart/form-data" } 
       });
 
       if (response) {
+        console.log("[EditProfile] Profile update response:", response.data);
         onUpdate(formData); 
         onClose();
-        console.log("Profile updated successfully");
+        console.log("[EditProfile] Profile updated successfully, closing modal.");
       } else {
-        console.error("Failed to update profile:", response.data);
+        console.error("[EditProfile] Failed to update profile: No response object", response);
       }
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("[EditProfile] Error updating profile:", error);
+      if (error.response) {
+        console.error("[EditProfile] Server responded with:", error.response.data);
+      }
     }
   };
 
