@@ -38,39 +38,82 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
     }
   };
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    console.log("[EditProfile] Submitting form with data:", formData, "Image:", image);
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("email", user.email);
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("department", formData.department);
-      formDataToSend.append("classRoll", formData.classRoll);
-      formDataToSend.append("phone", formData.phone);
-      if (image) {
-        formDataToSend.append("image", image);
-        console.log("[EditProfile] Appended image to formData:", image.name);
-      }
-      const response = await axios.post("/api/update-user", formDataToSend, {
-        headers: { "Content-Type": "multipart/form-data" } 
-      });
+  // const handleSubmit = async(e) => {
+  //   e.preventDefault();
+  //   console.log("[EditProfile] Submitting form with data:", formData, "Image:", image);
+  //   try {
+  //     const formDataToSend = new FormData();
+  //     formDataToSend.append("email", user.email);
+  //     formDataToSend.append("name", formData.name);
+  //     formDataToSend.append("department", formData.department);
+  //     formDataToSend.append("classRoll", formData.classRoll);
+  //     formDataToSend.append("phone", formData.phone);
+  //     if (image) {
+  //       formDataToSend.append("image", image);
+  //       console.log("[EditProfile] Appended image to formData:", image.name);
+  //     }
+  //     const response = await axios.post("/api/update-user", formDataToSend, {
+  //       headers: { "Content-Type": "multipart/form-data" } 
+  //     });
 
-      if (response) {
-        console.log("[EditProfile] Profile update response:", response.data);
-        onUpdate(formData); 
-        onClose();
-        console.log("[EditProfile] Profile updated successfully, closing modal.");
-      } else {
-        console.error("[EditProfile] Failed to update profile: No response object", response);
-      }
-    } catch (error) {
-      console.error("[EditProfile] Error updating profile:", error);
-      if (error.response) {
-        console.error("[EditProfile] Server responded with:", error.response.data);
-      }
+  //     if (response) {
+  //       console.log("[EditProfile] Profile update response:", response.data);
+  //       onUpdate(formData); 
+  //       onClose();
+  //       console.log("[EditProfile] Profile updated successfully, closing modal.");
+  //     } else {
+  //       console.error("[EditProfile] Failed to update profile: No response object", response);
+  //     }
+  //   } catch (error) {
+  //     console.error("[EditProfile] Error updating profile:", error);
+  //     if (error.response) {
+  //       console.error("[EditProfile] Server responded with:", error.response.data);
+  //     }
+  //   }
+  // };
+
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  console.log("[EditProfile] Submitting form with data:", formData, "Image:", image);
+  try {
+    const formDataToSend = new FormData();
+    formDataToSend.append("email", user.email);
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("department", formData.department);
+    formDataToSend.append("classRoll", formData.classRoll);
+    formDataToSend.append("phone", formData.phone);
+
+    if (image) {
+      formDataToSend.append("image", image);
+      console.log("[EditProfile] Appended image to formData:", image.name);
     }
-  };
+
+    const response = await axios.post("/api/update-user", formDataToSend, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    if (response) {
+      console.log("[EditProfile] Profile update response:", response.data);
+      alert("✅ Profile updated successfully!");
+      onUpdate(formData);
+      onClose();
+      console.log("[EditProfile] Profile updated successfully, closing modal.");
+    } else {
+      console.error("[EditProfile] Failed to update profile: No response object", response);
+      alert("⚠️ Failed to update profile. Please try again.");
+    }
+  } catch (error) {
+    console.error("[EditProfile] Error updating profile:", error);
+    if (error.response) {
+      console.error("[EditProfile] Server responded with:", error.response.data);
+      alert(`❌ Error: ${error.response.data.message || "Server error"}`);
+    } else {
+      alert("❌ Network error. Please check your connection.");
+    }
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black  bg-opacity-70 flex items-center justify-center z-50 p-4">
