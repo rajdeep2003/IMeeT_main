@@ -143,6 +143,10 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
         </button>
 
         <h2 className="text-xl font-bold text-white mb-6">Edit Profile</h2>
+       { user.email.endsWith("@rcciit.org.in")&&
+        <p className="text-purple-300 text-sm mb-4">
+          Click save Changes to auto-update your profile details.
+        </p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
