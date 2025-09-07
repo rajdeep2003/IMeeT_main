@@ -155,8 +155,7 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
               type="text"
               name="name"
               value={formData.name}
-              readOnly
-              // onChange={handleChange}
+              onChange={handleChange}
 
               className="w-full p-3 rounded-lg bg-gray-800 text-white border border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
