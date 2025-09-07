@@ -166,7 +166,12 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
               type="text"
               name="department"
               value={formData.department}
-              onChange={handleChange}
+              readOnly={user.email.endsWith("@rcciit.org.in")}
+              onChange={
+                !user.email.endsWith("@rcciit.org.in")
+                  ? handleChange
+                  : undefined
+              }
               className="w-full p-3 rounded-lg bg-gray-800 text-white border border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
@@ -179,7 +184,12 @@ const EditProfile = ({ user, onClose, onUpdate }) => {
               type="text"
               name="classRoll"
               value={formData.classRoll}
-              onChange={handleChange}
+              readOnly={user.email.endsWith("@rcciit.org.in")}
+              onChange={
+                !user.email.endsWith("@rcciit.org.in")
+                  ? handleChange
+                  : undefined
+              }
               className="w-full p-3 rounded-lg bg-gray-800 text-white border border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
