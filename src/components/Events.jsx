@@ -11,6 +11,9 @@ import "slick-carousel/slick/slick-theme.css";
 const Events = () => {
   const [events, setEvents] = useState({ technical: [], non_Technical: [] });
 
+  //  Add disabled events here by NAME (unique)
+  const disabledEvents = ["Visio-Craft"];
+
   useEffect(() => {
     const fetchAllEvents = async () => {
       try {
@@ -61,49 +64,68 @@ const Events = () => {
         {/* Parent container */}
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-8">
           <Slider {...settings}>
-            {events.map((event) => (
-              <div
-                key={event.event_id}
-                className="!flex !justify-center px-3" // ✅ spacing between slides
-              >
-                <Link to={`/events/${event.event_id}`}>
-                  <Motion.div
-                    variants={fadeIn("up", 0.2)}
-                    initial="hidden"
-                    whileInView="show"
-                    whileHover={{ scale: 1.07, rotate: 1 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                    viewport={{ once: false, amount: 0.6 }}
-                    className="relative group rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md 
-                               bg-white/5 border border-white/20 hover:border-fuchsia-400/70 
-                               transition-all duration-500 w-80 h-96 flex flex-col"
-                  >
-                    {/* Event Image */}
-                    <img
-                      src={event.event_img_url}
-                      alt={event.name}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                      onClick={playClickSound}
-                    />
+            {events.map((event) => {
+              const isDisabled = disabledEvents.includes(event.name);
 
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
+              return (
+                <div
+                  key={event.event_id}
+                  className="!flex !justify-center px-3"
+                >
+                  <Link to={isDisabled ? "#" : `/events/${event.event_id}`}>
+                    <Motion.div
+                      variants={fadeIn("up", 0.2)}
+                      initial="hidden"
+                      whileInView="show"
+                      whileHover={
+                        isDisabled ? {} : { scale: 1.07, rotate: 1 }
+                      }
+                      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                      viewport={{ once: false, amount: 0.6 }}
+                      className={`relative group rounded-3xl overflow-hidden shadow-2xl backdrop-blur-md 
+                                 bg-white/5 border border-white/20 transition-all duration-500 w-80 h-96 flex flex-col ${
+                                   isDisabled
+                                     ? "opacity-50 cursor-not-allowed"
+                                     : "hover:border-fuchsia-400/70"
+                                 }`}
+                    >
+                      {/* Event Image */}
+                      <img
+                        src={event.event_img_url}
+                        alt={event.name}
+                        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ${
+                          isDisabled ? "grayscale" : "group-hover:scale-110"
+                        }`}
+                        onClick={isDisabled ? undefined : playClickSound}
+                      />
 
-                    {/* Title */}
-                    <div className="absolute bottom-0 w-full p-5">
-                      <h3 className="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:text-fuchsia-300 transition-all duration-300 tracking-wide">
-                        {event.name}
-                      </h3>
-                    </div>
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-70 transition-opacity duration-500" />
 
-                    {/* Neon Border */}
-                    <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                      <div className="absolute inset-0 rounded-3xl border-2 border-fuchsia-400/60 animate-pulse shadow-[0_0_25px_6px_rgba(236,72,153,0.5)]"></div>
-                    </div>
-                  </Motion.div>
-                </Link>
-              </div>
-            ))}
+                      {/* Title */}
+                      <div className="absolute bottom-0 w-full p-5">
+                        <h3
+                          className={`text-2xl md:text-3xl font-bold drop-shadow-lg tracking-wide ${
+                            isDisabled
+                              ? "text-gray-400"
+                              : "text-white group-hover:text-fuchsia-300"
+                          }`}
+                        >
+                          {event.name} {isDisabled && "(Closed)"}
+                        </h3>
+                      </div>
+
+                      {/* Neon Border (only active events) */}
+                      {!isDisabled && (
+                        <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                          <div className="absolute inset-0 rounded-3xl border-2 border-fuchsia-400/60 animate-pulse shadow-[0_0_25px_6px_rgba(236,72,153,0.5)]"></div>
+                        </div>
+                      )}
+                    </Motion.div>
+                  </Link>
+                </div>
+              );
+            })}
           </Slider>
         </div>
       </div>
@@ -141,3 +163,4 @@ const Events = () => {
 };
 
 export default Events;
+
