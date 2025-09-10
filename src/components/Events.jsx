@@ -12,7 +12,7 @@ const Events = () => {
   const [events, setEvents] = useState({ technical: [], non_Technical: [] });
 
   //  Add disabled events here by NAME (unique)
-  const disabledEvents = ["Visio-Craft"];
+  const disabledEvents = ["Visio-Craft" , "Pixel Perfect"];
 
   useEffect(() => {
     const fetchAllEvents = async () => {
